@@ -1,3 +1,4 @@
+// TODO: Export the Slider into it's own file and bind it here, together with the onChange methods
 import * as React from 'react';
 import { Text, View, Button, StyleSheet, Alert } from 'react-native';
 import { Slider } from 'react-native';
@@ -52,7 +53,7 @@ export default class App extends React.Component {
         </Text>
         <Button 
           onPress={this.startStopTimer} 
-          title="Start / Pause" 
+          title="Start / Stop" 
         />
         <Button 
           onPress={this.resetTimer} 
@@ -105,17 +106,20 @@ export default class App extends React.Component {
   // TIMER METHODS, BUTTON onPress METHODS
   startStopTimer = () => {
     if (this.state.isRunning === true) {
+	  // Pause the Timer
       this.setState(previousState => ({
         isRunning: false,
       }));
       clearInterval(this.interval);
     } else if (this.state.isRunning === false && this.state.count === 0) {
+	  // Start the Timer, first time
       this.setState(previousState => ({
         count: previousState.timerLengths[previousState.timerIndex] * 60,
         isRunning: true,
       }));
       this.interval = setInterval(this.incrementTimer, 1000);
     } else {
+	  // Resume the paused timer
       this.setState(previousState => ({
         isRunning: true,
       }));
